@@ -245,6 +245,11 @@
   <!-- Floating Hearts Container -->
   <div id="heartContainer"></div>
 
+  <!-- Background Music Audio -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a1e2f8.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- Lock Screen -->
   <div id="lockScreen">
     <div class="lock-card">
@@ -298,12 +303,17 @@
     }
     createBgHearts();
 
-    // Password Check
+    // Password Check & Auto Play Music
+    const bgMusic = document.getElementById('bgMusic');
+
     function checkPassword() {
       const input = document.getElementById('secretInput').value.trim().toLowerCase();
       const errorText = document.getElementById('errorText');
 
       if (input === 'i love you') {
+        // Auto Play Music on Unlock
+        bgMusic.play().catch(e => console.log("Audio play blocked by browser"));
+
         document.getElementById('lockScreen').style.opacity = '0';
         setTimeout(() => {
           document.getElementById('lockScreen').style.display = 'none';
