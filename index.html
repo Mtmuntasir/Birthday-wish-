@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Shahrin! 🎉</title>
+  <title>Happy Birthday My Love Shahrin! ❤️</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Fredoka:wght@500;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -23,6 +23,29 @@
       min-height: 100vh;
       overflow-x: hidden;
       padding: 15px 0;
+      position: relative;
+    }
+
+    /* Floating Background Hearts */
+    .bg-heart {
+      position: fixed;
+      bottom: -100px;
+      font-size: 1.5rem;
+      color: rgba(255, 51, 102, 0.6);
+      animation: floatUp 8s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     /* Lock Screen */
@@ -114,6 +137,7 @@
       width: 100%;
       max-width: 440px;
       transition: opacity 1.5s ease-in-out;
+      z-index: 10;
     }
 
     .bday-title {
@@ -149,7 +173,6 @@
       z-index: 1;
     }
 
-    /* Photo Container & Floating Plus Button */
     .photo-slider {
       position: absolute;
       width: 170px;
@@ -178,46 +201,7 @@
       opacity: 1;
     }
 
-    .default-text {
-      color: #ff80bf;
-      font-size: 0.8rem;
-      text-align: center;
-      padding: 10px;
-    }
-
-    /* Upload Icon Button */
-    .upload-btn-wrapper {
-      position: absolute;
-      bottom: 10px;
-      right: 15px;
-      z-index: 10;
-    }
-
-    .upload-btn {
-      background: #ff007f;
-      color: white;
-      border: none;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.8);
-      transition: transform 0.2s;
-    }
-
-    .upload-btn:hover {
-      transform: scale(1.1);
-    }
-
-    #fileInput {
-      display: none;
-    }
-
-    /* Letter Box Styles */
+    /* Romantic Letter Box */
     .letter-card {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 51, 102, 0.3);
@@ -231,37 +215,41 @@
 
     .letter-header {
       font-family: 'Great Vibes', cursive;
-      font-size: 2rem;
+      font-size: 2.2rem;
       color: #ff3366;
       text-shadow: 0 0 10px #ff3366;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       text-align: center;
     }
 
     .letter-body {
-      font-size: 0.92rem;
-      line-height: 1.7;
+      font-size: 0.93rem;
+      line-height: 1.8;
       color: #e6e6e6;
       text-align: justify;
+      min-height: 150px;
     }
 
     .letter-footer {
-      font-family: 'Fredoka', sans-serif;
+      font-family: 'Great Vibes', cursive;
       margin-top: 15px;
       color: #ff4d79;
-      font-weight: 600;
+      font-size: 1.8rem;
       text-align: right;
-      font-size: 0.95rem;
+      text-shadow: 0 0 8px rgba(255, 77, 121, 0.6);
     }
   </style>
 </head>
 <body>
 
+  <!-- Floating Hearts Container -->
+  <div id="heartContainer"></div>
+
   <!-- Lock Screen -->
   <div id="lockScreen">
     <div class="lock-card">
-      <h2>Unlock Your Birthday Gift 🎁</h2>
-      <p>Type the secret password to open your surprise!</p>
+      <h2>Unlock Your Birthday Surprise 🎁</h2>
+      <p>Type the magic words to unlock my heart!</p>
       <input type="text" id="secretInput" class="input-box" placeholder="Type here..." autocomplete="off">
       <button class="unlock-btn" onclick="checkPassword()">Unlock ❤️</button>
       <p id="errorText" class="error-msg">Hint: Type "I love you" 😉</p>
@@ -275,37 +263,40 @@
     <div class="photo-frame">
       <canvas id="particleCanvas"></canvas>
       
-      <!-- Photos inside Particle Heart -->
+      <!-- Permanent Photo Section -->
       <div class="photo-slider" id="photoSlider">
-        <span class="default-text" id="defText">Click (+) below to add photos 📷</span>
-      </div>
-
-      <!-- Add Photos (+ Icon) Button -->
-      <div class="upload-btn-wrapper">
-        <label for="fileInput" class="upload-btn" title="Add Photo">+</label>
-        <input type="file" id="fileInput" accept="image/*" multiple onchange="handleImageUpload(event)">
+        <img src="Screenshot_20260821-010548.jpg" class="active-img" alt="Photo 1">
       </div>
     </div>
 
-    <!-- Romantic Wish Letter -->
+    <!-- Romantic Wish Letter with Typing Effect -->
     <div class="letter-card">
-      <div class="letter-header">For My Dearest Shahrin,</div>
-      <div class="letter-body">
-        Happy Birthday to the most special person in my life! ✨<br><br>
-        <strong>06-11-2010</strong> — The world became infinitely more beautiful on this day because you were born. 
-        <b>Shahrin Binte Morshed</b>, you are not just a name to me, you are the most precious variable in my code of life. 
-        In every line of code, in every rhythm of my heart, you are the sweetest melody.<br><br>
-        May your day be filled with endless smiles, pure happiness, and all the love you deserve. Thank you for making my life so incredibly romantic and complete. 💖
-      </div>
+      <div class="letter-header">To My Dearest Shahrin,</div>
+      <div class="letter-body" id="typewriterText"></div>
       <div class="letter-footer">
-        Forever Yours ❤️
+        Yours & Only Yours, ❤️
       </div>
     </div>
   </div>
 
   <script>
-    let imagesList = [];
-    let sliderInterval = null;
+    // Create Background Floating Hearts
+    function createBgHearts() {
+      const container = document.getElementById('heartContainer');
+      const hearts = ['❤️', '💖', '✨', '💕', '🌸'];
+      
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('bg-heart');
+        heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        container.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 8000);
+      }, 400);
+    }
+    createBgHearts();
 
     // Password Check
     function checkPassword() {
@@ -322,6 +313,7 @@
           setTimeout(() => {
             bdayPage.style.opacity = '1';
             initParticles();
+            startTypewriter();
           }, 50);
 
         }, 1000);
@@ -336,49 +328,30 @@
       }
     });
 
-    // Image Upload Handler
-    function handleImageUpload(event) {
-      const files = event.target.files;
-      if (!files.length) return;
+    // Romantic Letter Text (Typing Effect)
+    const romanticText = "Happy Birthday, my love! 🌹\n\n06-11-2010 — আজকের এই দিনে পৃথিবীটা আরও সুন্দর হয়েছিল কারণ তুমি জন্মেছিলে। Shahrin Binte Morshed, তুমি শুধু আমার জীবনের কোনো সাধারণ নাম নও, তুমি আমার পুরো অস্তিত্ব জুড়ে থাকা এক অনুভূতি। \n\nআমার কোডিংয়ের প্রতিটা লাইনে যেমন লজিক থাকে, তেমনি আমার প্রতিটা হৃদস্পন্দনে শুধু তুমিই আছো। You are the prettiest variable and the sweetest algorithm in my life! \n\nতোমার এই বিশেষ দিনে প্রার্থণা করি, তোমার মুখের এই মায়াবী হাসিটা যেন সারাজীবন এমন করেই থাকে। আমার জীবনের সবটুকু ভালোবাসা দিয়ে তোমায় জন্মদিনের অনেক অনেক শুভেচ্ছা! ❤️✨";
 
-      const slider = document.getElementById('photoSlider');
-      const defText = document.getElementById('defText');
-      if (defText) defText.remove();
+    function startTypewriter() {
+      const element = document.getElementById('typewriterText');
+      let index = 0;
+      element.innerHTML = "";
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          if (imagesList.length === 0) {
-            img.classList.add('active-img');
+      function type() {
+        if (index < romanticText.length) {
+          let char = romanticText.charAt(index);
+          if (char === '\n') {
+            element.innerHTML += '<br>';
+          } else {
+            element.innerHTML += char;
           }
-          slider.appendChild(img);
-          imagesList.push(img);
-
-          if (imagesList.length > 1 && !sliderInterval) {
-            startPhotoSlider();
-          }
-        };
-
-        reader.readAsDataURL(file);
+          index++;
+          setTimeout(type, 35);
+        }
       }
+      type();
     }
 
-    // Photo Slider Loop
-    function startPhotoSlider() {
-      let currentIndex = 0;
-      sliderInterval = setInterval(() => {
-        if (imagesList.length <= 1) return;
-        imagesList[currentIndex].classList.remove('active-img');
-        currentIndex = (currentIndex + 1) % imagesList.length;
-        imagesList[currentIndex].classList.add('active-img');
-      }, 3000);
-    }
-
-    // Canvas Particle Animation
+    // Canvas Particle Heart Animation
     function initParticles() {
       const canvas = document.getElementById('particleCanvas');
       const ctx = canvas.getContext('2d');
@@ -390,7 +363,7 @@
       resizeCanvas();
 
       const particles = [];
-      const numParticles = 350;
+      const numParticles = 380;
 
       function getHeartPoint(t) {
         const x = 16 * Math.pow(Math.sin(t), 3);
@@ -446,4 +419,4 @@
     }
   </script>
 </body>
-  </html>
+</html>
