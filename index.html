@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Shahrin! 🎉</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Fredoka:wght@500;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d0d1a;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 15px 0;
+    }
+
+    /* Lock Screen */
+    #lockScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 100;
+      transition: all 1s ease-in-out;
+      padding: 20px;
+    }
+
+    .lock-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 0, 128, 0.3);
+      padding: 30px 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(255, 0, 128, 0.2);
+      max-width: 360px;
+      width: 100%;
+    }
+
+    .lock-card h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.5rem;
+      color: #ff3366;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+    }
+
+    .lock-card p {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 30px;
+      border: 2px solid #ff007f;
+      background: #000;
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+      outline: none;
+      margin-bottom: 15px;
+      transition: 0.3s;
+    }
+
+    .input-box:focus {
+      box-shadow: 0 0 15px #ff007f;
+    }
+
+    .unlock-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff007f, #ff5252);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+      transition: 0.3s;
+    }
+
+    .unlock-btn:hover {
+      transform: scale(1.03);
+    }
+
+    .error-msg {
+      color: #ff4d4d;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Main Birthday Screen */
+    #birthdayPage {
+      display: none;
+      opacity: 0;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 440px;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .bday-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.6rem;
+      color: #ff0055;
+      text-shadow: 0 0 15px #ff0055;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .photo-frame {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      border-image: linear-gradient(to right, #ff0055, #00f0ff) 1;
+      box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* Photo Container & Floating Plus Button */
+    .photo-slider {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 5;
+      border: 3px solid #ff007f;
+      box-shadow: 0 0 15px #ff007f;
+      background-color: #1a001a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .photo-slider img.active-img {
+      opacity: 1;
+    }
+
+    .default-text {
+      color: #ff80bf;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* Upload Icon Button */
+    .upload-btn-wrapper {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      z-index: 10;
+    }
+
+    .upload-btn {
+      background: #ff007f;
+      color: white;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.8);
+      transition: transform 0.2s;
+    }
+
+    .upload-btn:hover {
+      transform: scale(1.1);
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    /* Letter Box Styles */
+    .letter-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 51, 102, 0.3);
+      padding: 22px;
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.15);
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .letter-header {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #ff3366;
+      text-shadow: 0 0 10px #ff3366;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .letter-body {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #e6e6e6;
+      text-align: justify;
+    }
+
+    .letter-footer {
+      font-family: 'Fredoka', sans-serif;
+      margin-top: 15px;
+      color: #ff4d79;
+      font-weight: 600;
+      text-align: right;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Lock Screen -->
+  <div id="lockScreen">
+    <div class="lock-card">
+      <h2>Unlock Your Birthday Gift 🎁</h2>
+      <p>Type the secret password to open your surprise!</p>
+      <input type="text" id="secretInput" class="input-box" placeholder="Type here..." autocomplete="off">
+      <button class="unlock-btn" onclick="checkPassword()">Unlock ❤️</button>
+      <p id="errorText" class="error-msg">Hint: Type "I love you" 😉</p>
+    </div>
+  </div>
+
+  <!-- Main Birthday Screen -->
+  <div id="birthdayPage">
+    <div class="bday-title">🎉 Happy Birthday Shahrin! 🎂</div>
+
+    <div class="photo-frame">
+      <canvas id="particleCanvas"></canvas>
+      
+      <!-- Photos inside Particle Heart -->
+      <div class="photo-slider" id="photoSlider">
+        <span class="default-text" id="defText">Click (+) below to add photos 📷</span>
+      </div>
+
+      <!-- Add Photos (+ Icon) Button -->
+      <div class="upload-btn-wrapper">
+        <label for="fileInput" class="upload-btn" title="Add Photo">+</label>
+        <input type="file" id="fileInput" accept="image/*" multiple onchange="handleImageUpload(event)">
+      </div>
+    </div>
+
+    <!-- Romantic Wish Letter -->
+    <div class="letter-card">
+      <div class="letter-header">For My Dearest Shahrin,</div>
+      <div class="letter-body">
+        Happy Birthday to the most special person in my life! ✨<br><br>
+        <strong>06-11-2010</strong> — The world became infinitely more beautiful on this day because you were born. 
+        <b>Shahrin Binte Morshed</b>, you are not just a name to me, you are the most precious variable in my code of life. 
+        In every line of code, in every rhythm of my heart, you are the sweetest melody.<br><br>
+        May your day be filled with endless smiles, pure happiness, and all the love you deserve. Thank you for making my life so incredibly romantic and complete. 💖
+      </div>
+      <div class="letter-footer">
+        Forever Yours ❤️
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let imagesList = [];
+    let sliderInterval = null;
+
+    // Password Check
+    function checkPassword() {
+      const input = document.getElementById('secretInput').value.trim().toLowerCase();
+      const errorText = document.getElementById('errorText');
+
+      if (input === 'i love you') {
+        document.getElementById('lockScreen').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('lockScreen').style.display = 'none';
+          
+          const bdayPage = document.getElementById('birthdayPage');
+          bdayPage.style.display = 'flex';
+          setTimeout(() => {
+            bdayPage.style.opacity = '1';
+            initParticles();
+          }, 50);
+
+        }, 1000);
+      } else {
+        errorText.style.display = 'block';
+      }
+    }
+
+    document.getElementById('secretInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+
+    // Image Upload Handler
+    function handleImageUpload(event) {
+      const files = event.target.files;
+      if (!files.length) return;
+
+      const slider = document.getElementById('photoSlider');
+      const defText = document.getElementById('defText');
+      if (defText) defText.remove();
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          if (imagesList.length === 0) {
+            img.classList.add('active-img');
+          }
+          slider.appendChild(img);
+          imagesList.push(img);
+
+          if (imagesList.length > 1 && !sliderInterval) {
+            startPhotoSlider();
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Photo Slider Loop
+    function startPhotoSlider() {
+      let currentIndex = 0;
+      sliderInterval = setInterval(() => {
+        if (imagesList.length <= 1) return;
+        imagesList[currentIndex].classList.remove('active-img');
+        currentIndex = (currentIndex + 1) % imagesList.length;
+        imagesList[currentIndex].classList.add('active-img');
+      }, 3000);
+    }
+
+    // Canvas Particle Animation
+    function initParticles() {
+      const canvas = document.getElementById('particleCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      resizeCanvas();
+
+      const particles = [];
+      const numParticles = 350;
+
+      function getHeartPoint(t) {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+        return { 
+          x: x * (canvas.width / 32) + canvas.width / 2, 
+          y: y * (canvas.height / 35) + canvas.height / 2 
+        };
+      }
+
+      class Particle {
+        constructor() {
+          this.t = Math.random() * Math.PI * 2;
+          const target = getHeartPoint(this.t);
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.targetX = target.x + (Math.random() - 0.5) * 12;
+          this.targetY = target.y + (Math.random() - 0.5) * 12;
+          this.size = Math.random() * 2 + 1;
+          this.speed = Math.random() * 0.04 + 0.02;
+          this.color = `hsl(${Math.random() * 50 + 320}, 100%, ${Math.random() * 30 + 60}%)`;
+        }
+
+        update() {
+          this.x += (this.targetX - this.x) * this.speed;
+          this.y += (this.targetY - this.y) * this.speed;
+        }
+
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = "#ff007f";
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < numParticles; i++) {
+        particles.push(new Particle());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+  </script>
+</body>
+  </html>
